@@ -2,7 +2,7 @@ import time
 from functools import partial
 from datetime import datetime, date
 from dateutil.tz import tzutc
-from six import with_metaclass
+from six import string_types, with_metaclass
 import redisco
 from redisco.containers import Set, List, SortedSet, NonPersistentList
 from .attributes import *
@@ -53,7 +53,7 @@ def _initialize_referenced(model_class, attribute):
                 .filter(**{attribute.attname: self.id}))
 
     klass = attribute._target_type
-    if isinstance(klass, basestring):
+    if isinstance(klass, string_types):
         return (klass, model_class, attribute)
     else:
         related_name = (attribute.related_name or
